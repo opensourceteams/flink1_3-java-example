@@ -15,9 +15,12 @@ public class FraudDetectionJob {
 	public static void main(String[] args) throws Exception {
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+		//env.setParallelism(2);
 		DataStream<Transaction> transactions = env
 			.addSource(new TransactionSource())
 			.name("transactions");
+
+
 
 		DataStream<Alert> alerts = transactions
 			.keyBy(Transaction::getAccountId)
@@ -29,5 +32,6 @@ public class FraudDetectionJob {
 			.name("send-alerts");
 
 		env.execute("Fraud Detection");
+		//System.out.println(env.getExecutionPlan());
 	}
 }
