@@ -25,13 +25,13 @@ public class FraudDetectionJob {
 		DataStream<Alert> alerts = transactions
 			.keyBy(Transaction::getAccountId)
 			.process(new FraudDetector())
-			.name("fraud-detector");
+			.name("process信息");
 
 		alerts
 			.addSink(new AlertSink())
-			.name("send-alerts");
+			.name("sink信息");
 
-		env.execute("Fraud Detection");
+		env.execute("欺诈检测");
 		//System.out.println(env.getExecutionPlan());
 	}
 }

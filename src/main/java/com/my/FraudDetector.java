@@ -49,7 +49,7 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
 		flagIndex = getRuntimeContext().getState(valueStateDescriptorIndex);
 
 
-		LOG.info("[open 执行的次数] :{}  :{}",++index2);
+		LOG.debug("[open 执行的次数] :{}  :{}",++index2);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
 
 
 
-		LOG.info("[每次日志] :index:{}, flagIndex:{}, transaction:{}",++index ,flagIndex.value(),transaction);
+		LOG.debug("[每次日志] :index:{}, flagIndex:{}, transaction:{}",++index ,flagIndex.value(),transaction);
 
 		//上一次交易是小数据，true
 		Boolean lastTransactionWasSmall = flagState.value();
@@ -78,6 +78,7 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
 				alert.setId(transaction.getAccountId());
 				alert.setTimestamp(transaction.getTimestamp());
 				alert.setAmount(transaction.getAmount());
+				alert.setTransactionId(transaction.getId());
 
 				collector.collect(alert);
 			}

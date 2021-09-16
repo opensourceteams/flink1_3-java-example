@@ -1,6 +1,9 @@
 package com.my.entity;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 /** A simple transaction. */
@@ -81,10 +84,13 @@ public final class Transaction {
 
     @Override
     public String toString() {
+        Date date = new Date(timestamp);
+        String timestampString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
         return "Transaction{" +
                 "id=" + id +
                 ", accountId=" + accountId +
                 ", timestamp=" + timestamp +
+                ", timestampString=" + timestampString +
                 ", amount=" + amount +
                 '}';
     }

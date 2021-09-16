@@ -5,8 +5,10 @@ import java.util.Objects;
 public class Alert {
 
     private long id;
+    private long transactionId;
     private long timestamp;
     private double amount;
+
 
     public Alert() {
     }
@@ -28,6 +30,15 @@ public class Alert {
         } else {
             return false;
         }
+    }
+
+
+    public long getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(long transactionId) {
+        this.transactionId = transactionId;
     }
 
     public long getTimestamp() {
@@ -55,6 +66,7 @@ public class Alert {
     public String toString() {
         return "Alert{" +
                 "id=" + id +
+                ", transactionId=" + transactionId +
                 ", timestamp=" + timestamp +
                 ", amount=" + amount +
                 '}';
