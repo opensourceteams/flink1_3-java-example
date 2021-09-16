@@ -8,7 +8,7 @@ import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;
-import org.apache.flink.walkthrough.common.entity.Transaction;
+import com.my.entity.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -5,8 +5,8 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import com.my.sink.AlertSink;
 import com.my.entity.Alert;
-import org.apache.flink.walkthrough.common.entity.Transaction;
-import org.apache.flink.walkthrough.common.source.TransactionSource;
+import com.my.entity.Transaction;
+import com.my.source.TransactionSource;
 
 /**
  * Skeleton code for the datastream walkthrough
