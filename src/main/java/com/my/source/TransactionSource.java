@@ -4,7 +4,6 @@ package com.my.source;
 import org.apache.flink.annotation.Public;
 import org.apache.flink.streaming.api.functions.source.FromIteratorFunction;
 import com.my.entity.Transaction;
-import scala.Int;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -15,14 +14,11 @@ public class TransactionSource extends FromIteratorFunction<Transaction> {
 
     private static final long serialVersionUID = 1L;
 
-//    public TransactionSource() {
-//        super(new RateLimitedIterator<>(TransactionIterator.unbounded()));
-//    }
 
 
     public TransactionSource() {
-       // super(new RateLimitedIterator<>(TransactionIterator.unbounded()));
-        super(new RateLimitedIterator<>(TransactionIterator.bounded()));
+        super(new RateLimitedIterator<>(TransactionIterator.unbounded()));
+        //super(new RateLimitedIterator<>(TransactionIterator.bounded()));
     }
 
 //    public TransactionSource() {
@@ -52,11 +48,11 @@ public class TransactionSource extends FromIteratorFunction<Transaction> {
 
         @Override
         public T next() {
-//            try {
-//                Thread.sleep(100);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             return inner.next();
         }
     }
