@@ -1,4 +1,4 @@
-package com.my.entity;
+package com.my.example.fraud_detection.entity;
 
 import java.util.Objects;
 

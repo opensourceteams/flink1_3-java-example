@@ -1,9 +1,9 @@
-package com.my.source;
+package com.my.example.fraud_detection.source;
 
 
 import org.apache.flink.annotation.Public;
 import org.apache.flink.streaming.api.functions.source.FromIteratorFunction;
-import com.my.entity.Transaction;
+import com.my.example.fraud_detection.entity.Transaction;
 
 import java.io.Serializable;
 import java.util.Iterator;

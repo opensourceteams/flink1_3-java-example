@@ -1,7 +1,7 @@
-package com.my.source;
+package com.my.example.fraud_detection.source;
 
 
-import com.my.entity.Transaction;
+import com.my.example.fraud_detection.entity.Transaction;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

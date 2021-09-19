@@ -1,7 +1,6 @@
-package com.my.entity;
+package com.my.example.fraud_detection.entity;
 
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;

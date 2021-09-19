@@ -1,17 +1,17 @@
 
-package com.my.example2;
+package com.my.example.fraud_detection.example2;
 
-import com.my.entity.Alert;
-import com.my.entity.Transaction;
-import com.my.sink.AlertSink;
-import com.my.source.TransactionSource;
+import com.my.example.fraud_detection.entity.Alert;
+import com.my.example.fraud_detection.entity.Transaction;
+import com.my.example.fraud_detection.sink.AlertSink;
+import com.my.example.fraud_detection.source.TransactionSource;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 /**
  * Skeleton code for the datastream walkthrough
  */
-public class FraudDetectionJob {
+public class FraudDetectionJob2 {
 	public static void main(String[] args) throws Exception {
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
@@ -24,7 +24,7 @@ public class FraudDetectionJob {
 
 		DataStream<Alert> alerts = transactions
 			.keyBy(Transaction::getAccountId)
-			.process(new FraudDetector())
+			.process(new FraudDetector2())
 			.name("process信息");
 
 		alerts

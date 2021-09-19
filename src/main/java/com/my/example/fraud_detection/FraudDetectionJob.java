@@ -1,12 +1,12 @@
 
-package com.my;
+package com.my.example.fraud_detection;
 
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import com.my.sink.AlertSink;
-import com.my.entity.Alert;
-import com.my.entity.Transaction;
-import com.my.source.TransactionSource;
+import com.my.example.fraud_detection.sink.AlertSink;
+import com.my.example.fraud_detection.entity.Alert;
+import com.my.example.fraud_detection.entity.Transaction;
+import com.my.example.fraud_detection.source.TransactionSource;
 
 /**
  * Skeleton code for the datastream walkthrough

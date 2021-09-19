@@ -1,18 +1,16 @@
 
-package com.my.example2;
+package com.my.example.fraud_detection;
 
-import com.my.entity.Alert;
-import com.my.entity.Transaction;
+import com.my.example.fraud_detection.entity.Alert;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;
+import com.my.example.fraud_detection.entity.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Date;
 
 /**
  * Skeleton code for implementing a fraud detector.
@@ -34,7 +32,6 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
 
 	//上一次交易是小数据，true
 	private transient ValueState<Integer> flagIndex;
-	private transient ValueState<Long> timeState;
 
 	 int  index =0;
 
@@ -51,9 +48,6 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
 
 		flagIndex = getRuntimeContext().getState(valueStateDescriptorIndex);
 
-		ValueStateDescriptor<Long> valueStateDescriptorTimerState = new ValueStateDescriptor<Long>("timer-state", Types.LONG);
-
-		timeState = getRuntimeContext().getState(valueStateDescriptorTimerState);
 
 		LOG.debug("[open 执行的次数] :{}  :{}",++index2);
 	}
@@ -72,7 +66,7 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
 
 
 
-		LOG.debug("[每次日志2] :index:{}, flagIndex:{}, transaction:{}",++index ,flagIndex.value(),transaction);
+		LOG.debug("[每次日志] :index:{}, flagIndex:{}, transaction:{}",++index ,flagIndex.value(),transaction);
 
 		//上一次交易是小数据，true
 		Boolean lastTransactionWasSmall = flagState.value();
@@ -88,19 +82,12 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
 
 				collector.collect(alert);
 			}
-			cleanUp(context);
+			flagState.clear();//清除上一次记录
 		}
 
 		//当前交易是小数据
 		if (transaction.getAmount() < SMALL_AMOUNT) {
 			flagState.update(true);
-
-			//long timer = context.timerService().currentProcessingTime() + ONE_MINUTE;
-			long timer = context.timerService().currentProcessingTime() + 1000 ;
-			LOG.info("注册时间：{} ,格式化:{} ,transaction:{}",timer,new Date(timer),transaction);
-
-			context.timerService().registerProcessingTimeTimer(timer);
-			timeState.update(timer);
 		}
 
 	/*	Alert alert = new Alert();
@@ -111,19 +98,4 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
 		collector.collect(alert);*/
 	}
 
-	@Override
-	public void onTimer(long timestamp, OnTimerContext ctx, Collector<Alert> out) throws Exception {
-		LOG.info("[时钟] 一分钟后执行");
-		timeState.clear();
-		flagState.clear();
-	}
-
-	private void cleanUp(Context ctx) throws Exception {
-		LOG.info("[时钟 cleanUp] ");
-		Long timer = timeState.value();
-		ctx.timerService().deleteProcessingTimeTimer(timer);
-		timeState.clear();
-		flagState.clear();
-
-	}
 }
